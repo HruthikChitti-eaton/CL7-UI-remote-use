@@ -17,21 +17,7 @@ body {
     margin: 0 auto;
     padding: 10px;
 }
-/* Have to add it in HTML*/
-.unselectable-text {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none; /* Standard syntax */
-}
 
-/* Horizontal arrangement */
-.hor-arr {
-    display: flex;
-    justify-content: space-around;
-    /* margin-bottom: var(--bottom-margin);  */
-    text-align: center;
-}
 
 .led {
     border: 1px solid white;
@@ -62,7 +48,17 @@ body {
 .vr {
     width:73px;
     height: 25px;
-    padding-top: 10px; 
+    padding-top: 15px; 
+    border-left: solid black 0px;
+}
+
+.vr-box {
+    border: 1px solid white;
+    border-right: black;
+    border-bottom: black;
+    height: 40px;
+    display: flex;
+    text-align: center;
     margin-bottom: var(--bottom-margin);
 }
 
@@ -76,7 +72,6 @@ body {
 .data-ports-box {
     border: 1px solid white;
     padding: 13px;
-    /* margin-top: 20px; */
 }
 
 .headings  {
@@ -125,9 +120,8 @@ body {
     height: 20px;
     padding-top: 10px;  
     border-left: black;
+    
 }
-
-
 
 .ud-heading-box {
     border-radius: 5px;
@@ -138,7 +132,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     width: 200px;
-    /* height: 40px; */
+    
 }
 
 .com-box {
@@ -148,7 +142,6 @@ body {
     border-bottom: black;
     margin-bottom: 10px;
 }
-
 
 .com {
     width:110px;
@@ -185,4 +178,3 @@ body {
 .all-off::before{
     border-top: 15px solid var(--border-top-color, rgb(0, 255, 242));;
 }
-

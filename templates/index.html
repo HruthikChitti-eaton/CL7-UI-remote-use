@@ -10,10 +10,12 @@
     <div class = "outer-container">
         <div class="container">
 
-            <div class="hor-arr">
-                <div class="led vr", id="vr_1">1</div>
-                <div class="led vr", id="vr_2">2</div>
-                <div class="led vr", id="vr_3">3</div>
+            <div class="vr-box">
+                <!-- <div class="hor-arr"> -->
+                    <div class="led vr", id="vr_1">1</div>
+                    <div class="led vr", id="vr_2">2</div>
+                    <div class="led vr", id="vr_3">3</div>
+                <!-- </div> -->
             </div>
 
             <div class="led name", id="volt_limitter_high">VOLT LIMITER HIGH</div>
@@ -62,13 +64,14 @@
             <div class="led name", id="diag_error">DIAG ERROR</div>
 
             <div class="ud-box">
-                <div class="hor-arr">
+                <div style="display: flex; text-align: center;">
                     <div class="led ud", id="ud_1"></div>
                     <div class="led ud", id="ud_2"></div>
                     <div class="led ud", id="ud_3"></div>
                 </div>
                 <div class="ud-heading-box">USER-DEFINED</div>
             </div>
+
             <div style="height:250px;"></div>
             <div class="headings">COM 1</div>
             <div class="com-box">

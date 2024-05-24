@@ -38,12 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
 function led_front_panel(led_elements_arr, color){
     for (let element of led_elements_arr){
         element.addEventListener("click", function() {
             // console.log(element.id);
-            fetch('/led_front_panel', {
+            fetch('/test_led_frontpanel', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
