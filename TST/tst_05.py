@@ -46,6 +46,5 @@ class tst_05 :
     def write_num(num, port) :
         cmd_str = "TST:05 "
         num_str = str(num)
-        print(num_str, len(num_str))
         cmd_str += "0"*(9 - len(num_str)) + num_str+'\n'
         port.write(cmd_str.encode('ascii'))           
