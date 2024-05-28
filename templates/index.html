@@ -11,11 +11,9 @@
         <div class="container">
 
             <div class="vr-box">
-                <!-- <div class="hor-arr"> -->
-                    <div class="led vr", id="vr_1">1</div>
-                    <div class="led vr", id="vr_2">2</div>
-                    <div class="led vr", id="vr_3">3</div>
-                <!-- </div> -->
+                <div class="led vr", id="vr_1">1</div>
+                <div class="led vr", id="vr_2">2</div>
+                <div class="led vr", id="vr_3">3</div>
             </div>
 
             <div class="led name", id="volt_limitter_high">VOLT LIMITER HIGH</div>
@@ -29,19 +27,17 @@
             <div style="height: 80px;"></div>
             
             <div class="data-ports-box">
+
                 <div class="headings">DATA PORTS</div>
                 <div class="led ports", id="data_ports">
                     <div class="usb">
-                        USB<br>DRIVE
-                        <div class="usb-port">
-                            <div class="usb-port-line"></div>
-                        </div>
-                    </div>
-                    <div class="pc">
-                        PC
-                    </div>
+                USB<br>DRIVE
+                <div class="usb-port">
+                    <div class="usb-port-line"></div>
                 </div>
-
+                </div>
+                    <div class="pc">PC</div>
+                </div>
 
             </div>
         </div>
@@ -88,7 +84,6 @@
 
     </div>
 
-    
-    <script src="{{ url_for('static',filename='index.js')}}"></script>
+    <script type="module", src="{{ url_for('static',filename='index.js')}}"></script>
 </body>
 </html>

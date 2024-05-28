@@ -1,4 +1,6 @@
-class tst_05 :
+from flask_socketio import Namespace, emit
+
+class tst_05(Namespace) :
 
     led_vals = {
         "all_off"            : 0 ,
@@ -29,21 +31,24 @@ class tst_05 :
     }
     cur_switched_on = ''
 
-    @staticmethod 
-    def test_led_frontpanel(_id, port) :
+    def init(port) :
+        tst_05.port = port 
 
+    def on_led_status_cs(self, _id) :
+        print(_id)
         if _id == tst_05.cur_switched_on :
-            tst_05.write_num(0, port)
+            tst_05.write_num(0, tst_05.port)
             tst_05.cur_switched_on = "all_off"
     
         else :
-            tst_05.write_num(tst_05.led_vals[_id], port)
+            tst_05.write_num(tst_05.led_vals[_id], tst_05.port)
             tst_05.cur_switched_on = _id 
 
-        return tst_05.cur_switched_on
+        emit('led_status_sc',tst_05.cur_switched_on)
 
     @staticmethod
     def write_num(num, port) :
+        # pass 
         cmd_str = "TST:05 "
         num_str = str(num)
         cmd_str += "0"*(9 - len(num_str)) + num_str+'\n'
