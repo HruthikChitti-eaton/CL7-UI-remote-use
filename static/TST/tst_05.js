@@ -74,7 +74,4 @@ export class tst_05 {
         this.prev_led = this.id_ce.all_off.element;
     }
 
-    // emit(_id){
-    //     this.socket.emit('led_status_cs',_id)
-    // }
 }

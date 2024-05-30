@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI Reconstruction</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='led.css')}}">
 </head>
 <body>
-    <div class = "outer-container">
+    <div class = "led_outer_container">
         <div class="container">
 
             <div class="vr-box">
@@ -26,35 +26,24 @@
 
             <div style="height: 80px;"></div>
             
-            <div class="data-ports-box">
+            <div style="border: 1px solid white; padding: 13px;">
 
-                <div class="headings">DATA PORTS</div>
-                <div class="led ports", id="data_ports">
-                    <div class="usb">
-                USB<br>DRIVE
-                <div class="usb-port">
-                    <div class="usb-port-line"></div>
-                </div>
-                </div>
-                    <div class="pc">PC</div>
+                <div class="led_headings">DATA PORTS</div>
+                <div class="led" style="display: flex; text-align: center;", id="data_ports">
+                    <div style="padding: 10px;"> USB<br>DRIVE
+                        <div class="usb-port">
+                            <div class="usb-port-line"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 10px; margin-left: 30px;">PC</div>
                 </div>
 
             </div>
         </div>
 
-        <div middle_container>
-            <div class="middle-container">
-                <div class = "led middle-box super-drag-box" id="super_visory_off">SUPER-<br>VISORY<br>OFF</div>
-                <div class = "led middle-box super-drag-box" id="drag_hand_reset">DRAG<br>HAND<br>RESET</div>
-            </div>
-            <div class="middle-container">
-                <div class = "led middle-box all-on-off-box all-off" id="all_off">ALL OFF</div>
-                <div class = "led middle-box all-on-off-box" id="all_on">ALL ON</div>
-            </div>
-        </div>
+
 
         <div class="container">
-
             <div class="led name", id="alarm">ALARM</div>
             <div class="led name", id="warning">WARNING</div>
             <div class="led name", id="diag_error">DIAG ERROR</div>
@@ -69,12 +58,12 @@
             </div>
 
             <div style="height:250px;"></div>
-            <div class="headings">COM 1</div>
+            <div class="led_headings">COM 1</div>
             <div class="com-box">
                 <div class="led com", id="com_1_tx">TX</div>
                 <div class="led com", id="com_1_rx">RX</div>
             </div>
-            <div class="headings">COM 1</div>
+            <div class="led_headings">COM 1</div>
             <div class="com-box">
                 <div class="led com", id="com_2_tx">TX</div>
                 <div class="led com", id="com_2_rx">RX</div>
@@ -82,6 +71,17 @@
 
         </div>
 
+        
+        <div>
+            <div style="display: flex;">
+                <div class = "led middle-box super-drag-box" id="super_visory_off">SUPER-<br>VISORY<br>OFF</div>
+                <div class = "led middle-box super-drag-box" id="drag_hand_reset">DRAG<br>HAND<br>RESET</div>
+            </div>
+            <div style="display: flex;">
+                <div class = "led middle-box all-on-off-box all-off" id="all_off">ALL OFF</div>
+                <div class = "led middle-box all-on-off-box" id="all_on">ALL ON</div>
+            </div>
+        </div>
     </div>
 
     <script type="module", src="{{ url_for('static',filename='index.js')}}"></script>

@@ -1,4 +1,5 @@
 from flask_socketio import Namespace, emit
+from com import Com
 
 class tst_05(Namespace) :
 
@@ -30,26 +31,36 @@ class tst_05(Namespace) :
         "all_on"             : "7fffff"
     }
     cur_switched_on = ''
-
-    def init(port) :
-        tst_05.port = port 
-
-    def on_led_status_cs(self, _id) :
-        print(_id)
-        if _id == tst_05.cur_switched_on :
-            tst_05.write_num(0, tst_05.port)
-            tst_05.cur_switched_on = "all_off"
+    succ_str = 'tst:05\r\n'
     
-        else :
-            tst_05.write_num(tst_05.led_vals[_id], tst_05.port)
-            tst_05.cur_switched_on = _id 
+    # route..
+    def on_led_status_cs(self, _id) :
 
-        emit('led_status_sc',tst_05.cur_switched_on)
+        val = None
+        if _id == tst_05.cur_switched_on :
+            val = 0
+        else :
+            val = tst_05.led_vals[_id]
+
+        
+        res = tst_05.write_num(val)
+        if res == True:
+            tst_05.cur_switched_on = "all_off" if not val else _id 
+            emit('led_status_sc',tst_05.cur_switched_on)
+        else : 
+            emit('error_sc',str(res))
 
     @staticmethod
-    def write_num(num, port) :
-        # pass 
+    def write_num(num) :
+
         cmd_str = "TST:05 "
         num_str = str(num)
         cmd_str += "0"*(9 - len(num_str)) + num_str+'\n'
-        port.write(cmd_str.encode('ascii'))           
+        Com.cur_input = cmd_str    
+        Com.write_to_port(cmd_str.encode('ascii'))
+
+        succ, data = Com.read_from_port()
+        if (succ and tst_05.succ_str in data) :
+            return True
+        else :
+            return data

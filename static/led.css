@@ -7,7 +7,7 @@ body {
     color: white;
     font-family: Arial, sans-serif;
 }
-.outer-container {
+.led_outer_container {
     display: flex;
 }
 
@@ -69,23 +69,10 @@ body {
     margin-bottom: var(--bottom-margin);
 }
 
-.data-ports-box {
-    border: 1px solid white;
-    padding: 13px;
-}
 
-.headings  {
+
+.led_headings  {
     margin-bottom: var(--bottom-margin);
-}
-
-.ports {
-    display: flex;
-    text-align: center;
-}
-
-.usb {
-    padding: 10px;
-    /* padding-bottom: 0px; */
 }
 
 .usb-port {
@@ -100,12 +87,6 @@ body {
     width: 40px;
     margin-top: 11px;
     margin-left: 7px;
-    /* margin:auto; */
-}
-
-.pc {
-    padding : 10px;
-    margin-left: 30px;
 }
 
 .ud-box {
@@ -151,9 +132,7 @@ body {
     text-align: center;
 }
 
-.middle-container{
-    display: flex;
-}
+
 
 .middle-box{
     border: 7px solid black;

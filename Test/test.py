@@ -54,7 +54,7 @@ def write() :
 if __name__ == "__main__" :
     port = Serial('COM4',baudrate=19200,timeout=1)
     read_thread = Thread(target=read_and_check_port_alive, args = (port,))
-    read_thread.daemon - True
+    read_thread.daemon = True
     read_thread.start()
     write(port)
     read_thread.join()
