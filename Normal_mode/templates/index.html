@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Reconstruction</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='led.css')}}">
+</head>
+<body>
+    <div class = "led_outer_container">
+        <div class="container">
+
+            <div class="vr-box">
+                <div class="led vr", id="vr_1">1</div>
+                <div class="led vr", id="vr_2">2</div>
+                <div class="led vr", id="vr_3">3</div>
+            </div>
+
+            <div class="led name", id="volt_limitter_high">VOLT LIMITER HIGH</div>
+            <div class="led name", id="out_of_band_high">OUT-OF-BAND HIGH</div>
+            <div class="led name", id="out_of_band_low">OUT-OF-BAND LOW</div>
+            <div class="led name", id="volt_limitter_low">VOLT LIMITER LOW</div>
+            <div class="led name", id="auto_tap_blocked">AUTO TAP BLOCKED</div>
+            <div class="led name", id="reverse_power">REVERSE POWER</div>
+            <div class="led name", id="volt_reduction">VOLT REDUCTION</div>
+
+            <div style="height: 80px;"></div>
+            
+            <div style="border: 1px solid white; padding: 13px;">
+
+                <div class="led_headings">DATA PORTS</div>
+                <div class="led" style="display: flex; text-align: center;", id="data_ports">
+                    <div style="padding: 10px;"> USB<br>DRIVE
+                        <div class="usb-port">
+                            <div class="usb-port-line"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 10px; margin-left: 30px;">PC</div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="led name", id="alarm">ALARM</div>
+            <div class="led name", id="warning">WARNING</div>
+            <div class="led name", id="diag_error">DIAG ERROR</div>
+
+            <div class="ud-box">
+                <div style="display: flex; text-align: center;">
+                    <div class="led ud", id="ud_1"></div>
+                    <div class="led ud", id="ud_2"></div>
+                    <div class="led ud", id="ud_3"></div>
+                </div>
+                <div class="ud-heading-box">USER-DEFINED</div>
+            </div>
+
+            <div style="height:250px;"></div>
+            <div class="led_headings">COM 1</div>
+            <div class="com-box">
+                <div class="led com", id="com_1_tx">TX</div>
+                <div class="led com", id="com_1_rx">RX</div>
+            </div>
+            <div class="led_headings">COM 1</div>
+            <div class="com-box">
+                <div class="led com", id="com_2_tx">TX</div>
+                <div class="led com", id="com_2_rx">RX</div>
+            </div>
+
+        </div>
+
+        
+        <div>
+            <div style="display: flex;">
+                <div class = "led middle-box super-drag-box" id="super_visory_off">SUPER-<br>VISORY<br>OFF</div>
+                <div class = "led middle-box super-drag-box" id="drag_hand_reset">DRAG<br>HAND<br>RESET</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script type="module", src="{{ url_for('static',filename='index.js')}}"></script> -->
+</body>
+</html>
