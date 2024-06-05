@@ -1,6 +1,8 @@
-class lcdRGB {
 
-  static letterData =  {' ': [[false, false, false, false, false],
+class lcd {
+  static check_performance = false;
+  static letterData =  {
+' ': [[false, false, false, false, false],
   [false, false, false, false, false],
   [false, false, false, false, false],
   [false, false, false, false, false],
@@ -703,15 +705,22 @@ class lcdRGB {
   [false, false, true, false, false],
   [false, true, false, false, false],
   [true, true, true, true, true],
-  [false, false, false, false, false]]}
+  [false, false, false, false, false],],
+'block' :[[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],
+[true, true, true, true, true],]}
 
-  constructor(id, rows, columns){
-    self.rows = rows
-    self.columns = columns
+  constructor(rows, columns){
+    this.rows = rows
+    this.columns = columns
     let screen = document.createElement('div');
     screen.classList.add('lcdscreen');
-    screen.classList.add('pixelated');
-    screen.id = id;
+    screen.style.width = (columns*14.5)+'px';
     for(let g = 0; g < rows; g++) {
       var rowEle = document.createElement('div');
       rowEle.classList.add('LCDRow');
@@ -732,11 +741,11 @@ class lcdRGB {
     this.screen = screen;
   }
 
-  async writeLetter(letter, ele){
-    console.log(letter);
-    console.log(ele);
-    let data = lcdRGB.letterData[letter]
-    console.log(data);
+  async write_char(char, ele){
+    let data = lcd.letterData[char]
+    if (data === undefined){
+      data = lcd.letterData.block
+    }
     for (var i = 0 ; i < 8 ; i++){
       for (var j = 0 ; j < 5 ; j++){
         if (data[i][j]){
@@ -748,111 +757,56 @@ class lcdRGB {
     }
   }
 
-  writeRow(string, row){
+  update_line(row, string){
+    console.log(row)
+    console.log(string)
     let chars = string.split('');
-    let rem = self.columns - chars.length;
+    let rem = this.columns - chars.length;
     if (rem > 0){
       for (let a = 0 ; a < rem ; a++)
         chars.push(' ');
     }
     else{
-      chars = string.slice(0, self.columns)
+      chars = string.slice(0, this.columns)
     }
-    let rowEle = document.getElementsByClassName('LCDRow')[row];
+    let rowEle = this.screen.getElementsByClassName('LCDRow')[row];
     let letters = rowEle.getElementsByClassName('letter');
-    for (let a = 0 ; a < self.columns ; a++){
-      this.writeLetter(chars[a], letters[a]);
+    if (lcd.check_performance){
+      const promises = [];
+      const prev = performance.now();
+      for (let a = 0 ; a < this.columns ; a++){
+        promises.push(this.write_char(chars[a], letters[a]));
+      }
+      Promise.all(promises)
+        .then(()=>{
+          console.log(performance.now()-prev);
+      })
+    }
+    else{
+      for(let a = 0 ; a < this.columns ; a++){
+        this.write_char(chars[a], letters[a]);
+      }
     }
   }
+
+  update_char(row, column, char){
+    this.write_char(char, this.screen.getElementsByClassName('LCDRow')[row].getElementsByClassName('letter')[column]);
+  }
+
+  clear_screen(){
+    for (let a = 0 ; a < this.rows ; a++){
+      this.update_line(a, " ");
+    }
+  }
+
+  back_light_on(){
+    this.screen.style.backgroundColor = '#8fe0d1';
+  }
+  
+  back_light_off(){
+    this.screen.style.backgroundColor = '#3f772d';
+  }
+
 }
 
-export default lcdRGB;
-// var lcdRGB = {
-//   lcdNew: function(name, place, rows, columns) {
-//     $(place).append('<div class="lcdscreen pixelated" id="'+name+'"></div>');
-//     for(var g=0; g<rows; g++) {
-//       var LCDRowIndex = (g+'').length == 1 ? "0" + g : g;
-//       var LCDRowElement = '<div class="LCDRow" id="'+LCDRowIndex+'">';
-//       $(".lcdscreen#"+name).append(LCDRowElement);
-//       for(var h=0; h<columns; h++) {
-
-//         var letterIndex = (h+'').length == 1 ? "0" + h : h;
-//         var letterElement = '<div class="letter" id="'+letterIndex+'">';
-//         $(".lcdscreen#"+name+">#"+LCDRowIndex+".LCDRow").append(letterElement);
-//         for(var j=0; j<8; j++) {
-//           var rowIndex = (j+'').length == 1 ? "0" + j : j;
-//           var rowElement = '<div class="letter-row" id="'+rowIndex+'"></div>';
-//           $(".lcdscreen#"+name+">#"+LCDRowIndex+".LCDRow>#"+letterIndex+".letter").append(rowElement);
-//           for(var i=0; i<5; i++) {
-//             var column = (i+'').length == 1 ? "0" + i : i;
-//             var pixel = '<div class="pixel" id="'+column+'"></div>';
-//            $(".lcdscreen#"+name+">#"+LCDRowIndex+".LCDRow>#"+letterIndex+".letter > #"+rowIndex+".letter-row").append(pixel);
-//           }
-//         }
-//       }
-//     }
-//   },
-//   writeLetter: async function (letter,row,index,lcdID) {
-
-//     for(var i=0;i<8;i++) {
-//       var charRow = (i+'').length == 1 ? "0" + i : i;
-//       // var promise = new Promise(function(){
-//         for(var j=0; j<5; j++) {
-//           var charColumn = (j+'').length == 1 ? "0" + j : j;
-//           if (letter == undefined || letter == "") 
-//             letter = " ";
-//           if (lcdRGB.letters[letter][i].charAt(j) == '1')
-//             $("#"+lcdID+">#"+row+".LCDRow>#"+index+".letter > #"+charRow+".letter-row > #"+charColumn+".pixel").addClass("pixel-on");
-//           else
-//             $("#"+lcdID+">#"+row+".LCDRow>#"+index+".letter > #"+charRow+".letter-row> #" +charColumn+".pixel").removeClass("pixel-on");
-//         }
-//       // })
-
-//     }
-//   },
-
-//   writeRow: async function (lcdID,string,row){
-//     const characters = string.split();
-//     var max = string.length;
-//     row = (row+"").length == 1 ? "0"+row : row;
-
-//     for(var i=0;i<max;i++) {
-//       var charIndex  = (i+"").length == 1 ? "0"+i : i;
-      
-//       // let promise = new Promise(function(){
-
-//       lcdRGB.writeLetter(string.charAt(i),row,charIndex, lcdID)
-//       // })
-//     }
-//   },
-//   rotateRow: function (lcdID,string,row){
-//     var stringItter = string;
-//     lcdRGB.writeRow(lcdID,stringItter, row);
-//     stringItter = stringItter.substr(1,stringItter.length)
-//     +stringItter.substr(0, 1); 
-//     t = setTimeout(function () {
-//       lcdRGB.rotateRow(lcdID,stringItter,row)
-//     }, 500);
-//   },
-//   changeRGBLCDColor: function (color){
-//     $(".lcdscreen").addClass("LCD-blue");
-
-//   },
-//   blink: function (state,lcdID, row, letterIndex){
-//     if (state)
-//       $("#"+lcdID+" > #"+row).find(">#"+letterIndex).addClass("blink");
-//     else
-//       $("#"+lcdID+" > #"+row).find(">#"+letterIndex).removeClass("blink");
-//   },
-//   addCustomLetter: function (mappingChar, pixelArray) {
-//     var checkLength = function (element, index, array) {
-//       return element.length == 5;
-//     }
-//     var passed = pixelArray.every(checkLength);
-//     if (pixelArray.length == 8 && passed)
-//       lcdRGB.letters[mappingChar] = pixelArray;
-//   },
-
-// };
-
-// export default lcdRGB;
+export default lcd;

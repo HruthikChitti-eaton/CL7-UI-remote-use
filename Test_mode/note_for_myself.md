@@ -1,2 +1,6 @@
 Have to complete the option to change braud rate and port number in forntend
 Use collapsed side panel for this...
+
+
+JS is so shitty, you can call a method from a class without mentioning "()"
+and it behaves in a weird way...

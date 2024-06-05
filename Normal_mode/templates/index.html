@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI Reconstruction</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='led.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='lcd.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='keypad.css')}}">
 </head>
 <body>
-    <div class = "led_outer_container">
-        <div class="container">
+    <div class = "upper_section">
+        <div class="container" style="margin-right: 10px;">
 
             <div class="vr-box">
                 <div class="led vr", id="vr_1">1</div>
@@ -24,7 +26,7 @@
             <div class="led name", id="reverse_power">REVERSE POWER</div>
             <div class="led name", id="volt_reduction">VOLT REDUCTION</div>
 
-            <div style="height: 80px;"></div>
+            <div style="height: 30px;"></div>
             
             <div style="border: 1px solid white; padding: 13px;">
 
@@ -38,6 +40,109 @@
                     <div style="padding: 10px; margin-left: 30px;">PC</div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class = "container" style="text-align: center; width: 310px; margin-right: 10px; padding-left:0px; padding-top:10px;"> 
+            <div style="text-align: center; font-size: 22px; margin-bottom:10px;">CL-7 Regulator Control</div>
+            <div id="lcd_screen" style="margin-left: 12px;"></div>
+            <div class = "keypad" style="margin-left: 10px;">
+
+                <div>
+                    <svg width="240" height="240">
+                        <polygon class="special_keys"  points="120,70 170,120 120,170, 70,120"  style="fill:#06a94d"/>
+                        <text                          x="83.5" y="127.5"  font-size="22" fill="white">ENTER</text>
+                        <polygon id="keypad_enter" class = "sp_trans" points="120,70 170,120 120,170, 70,120"/>
+                        
+                        <polygon class="special_keys"  points="120,10 175,65 145,95 120,70 95,95, 65,65" />
+                        <line                          x1="119" y1="35" x2="140" y2="56" class="sp_line"/>
+                        <line                          x1="121" y1="35" x2="100" y2="56" class="sp_line"/>
+                        <polygon id="keypad_up"  class = "sp_trans" points="120,10 175,65 145,95 120,70 95,95, 65,65"/>
+
+
+                        <polygon class="special_keys"     points="145,95 175,65 230,120 175,175 145,145, 170,120"/>
+                        <line                          x1="180" y1="100" x2="201" y2="121" class="sp_line"/>
+                        <line                          x1="180" y1="140" x2="201" y2="119" class="sp_line"/>
+                        <polygon id="keypad_right" class="sp_trans" points="145,95 175,65 230,120 175,175 145,145, 170,120"/>
+
+
+                        <polygon class="special_keys"      points="175,175 120,230 65,175 95,145 120,170 145,145"/>
+                        <line                          x1="119" y1="200" x2="140" y2="180" class="sp_line"/>
+                        <line                          x1="121" y1="200" x2="100" y2="180" class="sp_line"/>
+                        <polygon id="keypad_down"   class="sp_trans"    points="175,175 120,230 65,175 95,145 120,170 145,145"/>
+
+                        <polygon class="special_keys"  points="65,175 95,145 70,120 95,95 65,65  10,120"/>
+                        <line                          x1="40" y1="121" x2="60" y2="100" class="sp_line"/>
+                        <line                          x1="40" y1="119" x2="60" y2="140" class="sp_line"/>
+                        <polygon id="keypad_left"  class="sp_trans"    points="65,175 95,145 70,120 95,95 65,65  10,120"/>
+
+                        <polygon class="special_keys"  points="10,130 10,230 110,230"/>
+                        <text                          x="20" y="220" class="sp_text" font-size="19" fill="white">ESC</text>
+                        <polygon id="keypad_esc"  class="sp_trans" points="10,130 10,230 110,230"/>
+
+
+                        <polygon class="special_keys" points="230,130 230,230 130,230"/>
+                        <text                          x="170" y="220" class="sp_text" font-size="19" fill="white">EDIT</text>
+                        <polygon id="keypad_edit" class="sp_trans"     points="230,130 230,230 130,230" class="special_keys"/>
+
+                    </svg>
+                </div>
+            
+                <div style="display:inline-block">
+                    <div style="display:flex;">
+                        <div id = "keypad_1" class = "key-square">
+                            <div class="key-square-text number">1</div>
+                            <div class="key-square-text"></div>
+                        </div>
+                        <div id = "keypad_2" class = "key-square">
+                            <div class="key-square-text number">2</div>
+                            <div class="key-square-text">ABC</div>
+                        </div>
+                        <div id = "keypad_3" class = "key-square">
+                            <div class="key-square-text number">3</div>
+                            <div class="key-square-text">DEF</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;">
+                        <div id = "keypad_4" class = "key-square" >
+                            <div class="key-square-text number">4</div>
+                            <div class="key-square-text">GHI</div>
+                        </div>
+                        <div id = "keypad_5" class = "key-square">
+                            <div class="key-square-text number">5</div>
+                            <div class="key-square-text">JKL</div>
+                        </div>
+                        <div id = "keypad_6" class = "key-square">
+                            <div class="key-square-text number">6</div>
+                            <div class="key-square-text">MNO</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;">
+                        <div id = "keypad_7" class = "key-square">
+                            <div class="key-square-text number">7</div>
+                            <div class="key-square-text">PQRS</div>
+                        </div>
+                        <div id = "keypad_8" class = "key-square">
+                            <div class="key-square-text number">8</div>
+                            <div class="key-square-text">TUV</div>
+                        </div>
+                        <div id = "keypad_9" class = "key-square">
+                            <div class="key-square-text number">9</div>
+                            <div class="key-square-text">WXYZ</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;">
+                        <div id = "keypad_func" class = "key-square">
+                            <div class="key-square-text", style="padding-top: 12px; font-size: 20px;">FUNC</div>
+                        </div>
+                        <div id = "keypad_0" class = "key-square">
+                            <div class="key-square-text number" style="padding-top: 9px;">0</div>
+                        </div>
+                        <div id = "keypad_sym" class = "key-square">
+                            <div class="key-square-text", style="padding-top: 12px; font-size: 20px;">SYM</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -57,7 +162,7 @@
                 <div class="ud-heading-box">USER-DEFINED</div>
             </div>
 
-            <div style="height:250px;"></div>
+            <div style="height:200px;"></div>
             <div class="led_headings">COM 1</div>
             <div class="com-box">
                 <div class="led com", id="com_1_tx">TX</div>
@@ -80,6 +185,6 @@
         </div>
     </div>
 
-    <!-- <script type="module", src="{{ url_for('static',filename='index.js')}}"></script> -->
+    <script type="module", src="{{ url_for('static',filename='main.js')}}"></script>
 </body>
 </html>
