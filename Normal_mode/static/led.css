@@ -60,9 +60,6 @@ body {
     border-right: 25px solid transparent; 
 }
 
-.led:hover{
-    cursor: pointer;
-}
 
 .vr {
     width:73px;
@@ -164,6 +161,10 @@ body {
     padding-top:20px;
     width:100px;
     height:70px;
+}
+
+.super-drag-box:hover {
+    cursor: pointer;
 }
 
 .all-on-off-box{

@@ -758,8 +758,6 @@ class lcd {
   }
 
   update_line(row, string){
-    console.log(row)
-    console.log(string)
     let chars = string.split('');
     let rem = this.columns - chars.length;
     if (rem > 0){

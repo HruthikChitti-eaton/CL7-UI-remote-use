@@ -4,7 +4,8 @@ from threading import Thread
 from logging import getLogger
 
 from lcd_handler import lcd_handler
-from inputs_handler import inputs_handler
+from keypad_handler import keypad_handler
+from led_handler import led_handler 
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -12,7 +13,8 @@ socketio = SocketIO(app)
 # getLogger('werkzeug').disabled = True
 
 lcd_handler.init('/lcd_screen',socketio)
-socketio.on_namespace(inputs_handler('/inputs'))
+led_handler.init('/led', socketio)
+socketio.on_namespace(keypad_handler('/keypad'))
 
 
 @app.route('/')
@@ -22,6 +24,7 @@ def index():
 def ask_user():
     while True :
         inp = input("> ")
+        led_handler.set_led_state(inp,True);
         lcd_handler.update_line(3, inp)
 
 if __name__ == '__main__':
