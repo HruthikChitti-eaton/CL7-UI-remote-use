@@ -15,6 +15,8 @@ class lcd_handler(Namespace) :
 
     @staticmethod
     def clear_screen():
+        for a in range (4) : 
+            lcd_handler.screen_data[a] = ' '*20
         lcd_handler.emit('clear_screen','')
 
     @staticmethod
