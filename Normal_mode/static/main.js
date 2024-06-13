@@ -105,6 +105,9 @@ class keypad_handler {
 
         "NumpadSubtract": ["keypad_sym",null],
         "ShiftRight": ["keypad_func",null],
+
+        "__super_visory_off" : ["super_visory_off",null],
+        "__drag_hand_reset" : ["drag_hand_reset",null],
     };
 
 

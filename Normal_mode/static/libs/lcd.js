@@ -2,6 +2,14 @@
 class lcd {
   static check_performance = false;
   static letterData =  {
+'': [[false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false],
+  [false, false, false, false, false]],
 ' ': [[false, false, false, false, false],
   [false, false, false, false, false],
   [false, false, false, false, false],

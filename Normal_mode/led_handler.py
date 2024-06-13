@@ -41,7 +41,6 @@ class led_handler(Namespace) :
             led_handler.emit('led_state_update', {id:state})
 
     def on_get_cur_states(self, data) :
-        print("Called")
         led_handler.emit('led_state_update', led_handler.cur_states)
 
     @staticmethod

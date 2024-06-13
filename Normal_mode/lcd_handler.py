@@ -2,7 +2,10 @@ from flask_socketio import Namespace
 
 class lcd_handler(Namespace) :
 
-    screen_data = ["" ,"" ,"" ,""]
+    screen_data = ['                    ',
+                   '                    ',
+                   '                    ',
+                   '                    ']
 
     @staticmethod
     def init(route, socket) :
@@ -24,6 +27,7 @@ class lcd_handler(Namespace) :
 
     @staticmethod
     def update_char(row, column, char):
+        if (char == '') : char = ' '
         temp = list(lcd_handler.screen_data[row])
         temp[column] = char
         lcd_handler.screen_data[row] = "".join(temp)
