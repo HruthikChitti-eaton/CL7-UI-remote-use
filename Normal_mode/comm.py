@@ -2,6 +2,7 @@ from serial import Serial
 from lcd_handler import lcd_handler
 from threading import Thread
 from time import sleep
+from datetime import datetime
 
 class Comm :
 
@@ -20,7 +21,7 @@ class Comm :
                 Comm.port = Serial(Comm.port_num,baudrate=Comm.baud_rate)
                 break
             except Exception as e:
-                print("1. Exception :",e)
+                print(datetime.now().strftime('%H:%M:%S'), "1. Exception :",e)
                 sleep(1)
         if (not Comm.thread_created) :
             Thread(target = Comm.serial_read).start()
@@ -35,16 +36,20 @@ class Comm :
                 Comm.prev_input = data
                 break
             except Exception as e: 
-                print("2. Exception :" , e)
+                print(datetime.now().strftime('%H:%M:%S'), "2. Exception :" , e)
                 Comm.init() 
 
     @staticmethod
     def serial_read() :
+        prev_output = ''
         while True : 
             output = ''
             try :
                 if Comm.port.in_waiting > 0 :   
                     output = Comm.port.readline()
+                    if (output != prev_output) :
+                        prev_output = output
+                        print(output)
                     resend_required = False 
                     try : 
                         output = output.decode('utf-8')
@@ -54,7 +59,6 @@ class Comm :
                         # Gotta add additional stuff here later like str(output) and ODD one in output
                         resend_required = True 
                     if (resend_required) : 
-                        print("DATA RESENT")
                         Comm.serial_write(Comm.prev_input)
                     else :
                         if (output[:3] == 'LCD') :
@@ -86,5 +90,5 @@ class Comm :
                                         row_str += a 
                                 lcd_handler.update_line(row_num,row_str)
             except Exception as e :
-                print('3. Exception :',e)
+                print(datetime.now().strftime('%H:%M:%S'), '3. Exception :',e)
                 Comm.init()

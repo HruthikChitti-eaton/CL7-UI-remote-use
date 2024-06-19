@@ -158,5 +158,4 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('lcd_screen').appendChild(screen.screen);
     lcd_screen_handler.init('/lcd_screen');
     keypad_handler.init('/keypad');
-    led_handler.init('/led');
 });

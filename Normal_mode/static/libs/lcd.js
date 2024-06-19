@@ -2,6 +2,7 @@
 class lcd {
   static check_performance = false;
   static letterData =  {
+    // right arrow
 '' : [[false, false, false, false, false],
     [false, false, true,  false, false],
     [false, false, false, true,  false],
@@ -10,6 +11,16 @@ class lcd {
     [false, false, true,  false, false],
     [false, false, false, false, false],
     [false, false, false, false, false],],
+    // down arrow
+'' : [[false, false, true, false, false],
+    [false, false, true, false, false],
+    [false, false, true, false, false],
+    [false, false, true, false, false],
+    [false, false, true, false, false],
+    [true, false, true, false, true],
+    [false, true, true, true, false],
+    [false, false, true, false, false]],
+
 '': [[false, false, false, false, false],
   [false, false, false, false, false],
   [false, false, false, false, false],
@@ -760,6 +771,7 @@ class lcd {
   async write_char(char, ele){
     let data = lcd.letterData[char]
     if (data === undefined){
+      console.log('Character not found: \''+char+'\'');
       data = lcd.letterData.block
     }
     for (var i = 0 ; i < 8 ; i++){
