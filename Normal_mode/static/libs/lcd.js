@@ -819,17 +819,17 @@ class lcd {
     this.write_char(char, this.screen.getElementsByClassName('LCDRow')[row].getElementsByClassName('letter')[column]);
   }
 
-  clear_screen(){
+  clear_display(){
     for (let a = 0 ; a < this.rows ; a++){
       this.update_line(a, " ");
     }
   }
 
-  back_light_on(){
+  display_on(){
     this.screen.style.backgroundColor = '#8fe0d1';
   }
   
-  back_light_off(){
+  display_off(){
     this.screen.style.backgroundColor = '#3f772d';
   }
 

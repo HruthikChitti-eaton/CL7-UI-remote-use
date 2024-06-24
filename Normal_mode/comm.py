@@ -1,9 +1,10 @@
 from serial import Serial
-from lcd_handler import lcd_handler
+from process_serial_input import process_serial_input
 from threading import Thread
 from time import sleep
 from datetime import datetime
 
+file = open('log.txt','a')
 class Comm :
 
     # Confiurations .. 
@@ -32,6 +33,7 @@ class Comm :
     def serial_write(data) :
         while 1 :
             try : 
+                data += '\n'
                 Comm.port.write(data.encode('ascii'))
                 Comm.prev_input = data
                 break
@@ -41,54 +43,20 @@ class Comm :
 
     @staticmethod
     def serial_read() :
-        prev_output = ''
+        part_1 = ''
         while True : 
-            output = ''
+            input_str = ''
             try :
-                if Comm.port.in_waiting > 0 :   
-                    output = Comm.port.readline()
-                    if (output != prev_output) :
-                        prev_output = output
-                        print(output)
-                    resend_required = False 
-                    try : 
-                        output = output.decode('utf-8')
-                        if ('ODD one' in output) : 
-                            resend_required = True
-                    except :
-                        # Gotta add additional stuff here later like str(output) and ODD one in output
-                        resend_required = True 
-                    if (resend_required) : 
-                        Comm.serial_write(Comm.prev_input)
-                    else :
-                        if (output[:3] == 'LCD') :
-                            output = output.split(' ')
-                            if (output[1] == 'pc') :
-                                try :
-                                    row_index = int(output[2])
-                                    col_index = int(output[3])
-                                    if (output[4] != '\n' or output[4] != '') :
-                                        char = output[4]
-                                    else :
-                                        char = ' '
-                                    lcd_handler.update_char(row_index, col_index, char)
-                                except Exception as e:
-                                    print(e)
+                if Comm.port.in_waiting > 0 :  
+                    input_str = Comm.port.readline().decode('utf-8')[:-1]
+                    if ('LCD P02' == input_str[:7]) :
+                        while True :
+                            if (Comm.port.in_waiting > 0) :
+                                input_str += '\n' + Comm.port.readline().decode('utf-8')[:-1]
+                                break
+                    print(input_str)
+                    process_serial_input(input_str)
 
-                            elif (output[1] == 'display_clear') :
-                                lcd_handler.clear_screen()
-
-                        elif (output[:12] == 'CUR_LCD_DATA'):
-                            if (output[13:16] == 'ROW') :
-                                row_num = int(output[17])
-                                output = output[19:-1]
-                                row_str = ''
-                                for a in output :
-                                    if (a == '') :
-                                        row_str += ' '
-                                    else :
-                                        row_str += a 
-                                lcd_handler.update_line(row_num,row_str)
             except Exception as e :
-                print(datetime.now().strftime('%H:%M:%S'), '3. Exception :',e)
+                print(datetime.now().strftime('%H:%M:%S'), '4. Exception :',e)
                 Comm.init()

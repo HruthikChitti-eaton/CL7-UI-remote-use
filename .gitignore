@@ -2,3 +2,4 @@ __pycache__
 .vscode
 Test/log.txt
 Test/numbers.txt
+Normal_mode/log.txt
