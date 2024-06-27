@@ -1,5 +1,5 @@
 from flask_socketio import Namespace
-from comm import Comm 
+from .comm import Comm 
 
 class keypad_handler(Namespace) :   
 
@@ -28,7 +28,16 @@ class keypad_handler(Namespace) :
         "drag_hand_reset"   : 31
     }
 
+    keyCodes = list(codes.values())
+
     def on_key_pressed(self, data) :
         code = keypad_handler.codes.get(data, None)
         if (code) :
             Comm.serial_write(f'key {code:03d}')
+
+    @staticmethod
+    def send_keyCode(code) :
+        if code in keypad_handler.keyCodes :
+            Comm.serial_write(f'key {code:03d}')
+            return 1 
+        else : return 0

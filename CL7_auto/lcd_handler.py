@@ -1,4 +1,5 @@
 from flask_socketio import Namespace
+from .config import Config 
 
 class lcd_handler(Namespace) :
 
@@ -45,7 +46,8 @@ class lcd_handler(Namespace) :
 
     @staticmethod
     def emit(event,data) :
-        lcd_handler.socket.emit(event, data, namespace=lcd_handler.route)
+        if Config.init_server :
+            lcd_handler.socket.emit(event, data, namespace=lcd_handler.route)
             
     def on_get_cur_states(self, data):
         for row, line in enumerate(lcd_handler.screen_data) :

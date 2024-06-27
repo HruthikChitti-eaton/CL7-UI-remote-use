@@ -2,26 +2,26 @@
 import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import lcd from './libs/lcd.js'
 
-let screen = new lcd(4, 20);
+let display = new lcd(4, 20);
 
-class lcd_screen_handler {
+class lcd_handler {
 
     static init(route) {
-        lcd_screen_handler.socket = io(route);
-        lcd_screen_handler.socket.on('update_char', (data) => { lcd_screen_handler.update_char(data) });
-        lcd_screen_handler.socket.on('update_line', (data) => { lcd_screen_handler.update_line(data) });
-        lcd_screen_handler.socket.on('clear_screen', (data) => { screen.clear_screen() });
-        lcd_screen_handler.socket.on('back_light_off', (data) => { screen.back_light_off() });
-        lcd_screen_handler.socket.on('back_light_on', (data) => { screen.back_light_on() });
-        lcd_screen_handler.socket.emit('get_cur_states', '');
+        lcd_handler.socket = io(route);
+        lcd_handler.socket.on('update_char', (data) => { lcd_handler.update_char(data) });
+        lcd_handler.socket.on('update_line', (data) => { lcd_handler.update_line(data) });
+        lcd_handler.socket.on('clear_display', (data) => { display.clear_display() });
+        lcd_handler.socket.on('display_off', (data) => { display.display_off() });
+        lcd_handler.socket.on('display_on', (data) => { display.display_on() });
+        lcd_handler.socket.emit('get_cur_states', '');
     }
 
     static update_char(data) {
-        screen.update_char(data.row, data.column, data.char);
+        display.update_char(data.row, data.column, data.char);
     }
 
     static update_line(data) {
-        screen.update_line(data.row, data.line);
+        display.update_line(data.row, data.line);
     }
 }
 
@@ -155,7 +155,7 @@ class keypad_handler {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('lcd_screen').appendChild(screen.screen);
-    lcd_screen_handler.init('/lcd_screen');
+    document.getElementById('lcd_display').appendChild(display.display);
+    lcd_handler.init('/lcd_display');
     keypad_handler.init('/keypad');
 });

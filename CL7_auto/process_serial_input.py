@@ -1,7 +1,6 @@
-from lcd_handler import lcd_handler
+from .lcd_handler import lcd_handler
 
 def process_serial_input(input_str) :
-    global cur_keyCode, sequential
     code_type = input_str[:3]
 
     match code_type :
@@ -86,7 +85,7 @@ def process_serial_input(input_str) :
                             if (row < lcd_handler.MAX_NUMBER_OF_LCD_LINES) :
                                 string = input_str[12:]
                                 if (len(string) <= lcd_handler.LCD_LINE_SIZE) :
-                                    string = (lcd_handler.LCD_LINE_SIZE-len)*' ' + string
+                                    string = (lcd_handler.LCD_LINE_SIZE-len(string))*' ' + string
                                     lcd_handler.update_line(row, string)
                                 else :
                                     lcd_handler.update_line(row, string[:20])
@@ -100,7 +99,10 @@ def process_serial_input(input_str) :
 
         # KeyProcessed conformation
         case 'KEY' :
-            print(input_str)
+            code_sub_type = input_str[4:7]
+            match code_sub_type :
+                case 'PRO' :
+                    keyCode_rec = int(input_str[8:])
                     
         # Debug statements
         case 'DEB' :

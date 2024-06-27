@@ -1,14 +1,15 @@
-
-.lcdscreen {
-  /* background-color: #87AD34; */
+.lcddisplay {
   background-color: #93c24c;
   padding: 3px;
   width:340px;
 }
 
+.lcddisplay-off{
+  background-color: #3f772d !important;
+}
+
 .pixel {
   display: inline-block;
-  /* background-color: #8BaF41; */
   background-color: #82b13b;
   height: 2px;
   width: 2px;

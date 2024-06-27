@@ -745,9 +745,9 @@ class lcd {
   constructor(rows, columns){
     this.rows = rows
     this.columns = columns
-    let screen = document.createElement('div');
-    screen.classList.add('lcdscreen');
-    screen.style.width = (columns*14.5)+'px';
+    let display = document.createElement('div');
+    display.classList.add('lcddisplay');
+    display.style.width = (columns*14.5)+'px';
     for(let g = 0; g < rows; g++) {
       var rowEle = document.createElement('div');
       rowEle.classList.add('LCDRow');
@@ -763,9 +763,10 @@ class lcd {
         }
         rowEle.appendChild(letterEle);
       }
-      screen.appendChild(rowEle);
+      display.appendChild(rowEle);
     }
-    this.screen = screen;
+    this.display = display;
+    this.display_is_off = false;
   }
 
   async write_char(char, ele){
@@ -786,6 +787,9 @@ class lcd {
   }
 
   update_line(row, string){
+    if (this.display_is_off){
+      this.display_on();
+    }
     let chars = string.split('');
     let rem = this.columns - chars.length;
     if (rem > 0){
@@ -795,7 +799,7 @@ class lcd {
     else{
       chars = string.slice(0, this.columns)
     }
-    let rowEle = this.screen.getElementsByClassName('LCDRow')[row];
+    let rowEle = this.display.getElementsByClassName('LCDRow')[row];
     let letters = rowEle.getElementsByClassName('letter');
     if (lcd.check_performance){
       const promises = [];
@@ -816,23 +820,55 @@ class lcd {
   }
 
   update_char(row, column, char){
-    this.write_char(char, this.screen.getElementsByClassName('LCDRow')[row].getElementsByClassName('letter')[column]);
+    this.write_char(char, this.display.getElementsByClassName('LCDRow')[row].getElementsByClassName('letter')[column]);
   }
 
   clear_display(){
+    console.log("WHAT IS THIS ?")
     for (let a = 0 ; a < this.rows ; a++){
       this.update_line(a, " ");
     }
   }
 
+  async display_off_pixel(ele){
+    for (var i = 0 ; i < 8 ; i++){
+      for (var j = 0 ; j < 5 ; j++){
+        ele.children[(i*5)+(j)].classList.add('lcddisplay-off');
+      }
+    }
+  }
+
+  async display_on_pixel(ele){
+    for (var i = 0 ; i < 8 ; i++){
+      for (var j = 0 ; j < 5 ; j++){
+        ele.children[(i*5)+j].classList.remove('lcddisplay-off');
+      }
+    }
+  }
+
   display_on(){
-    this.screen.style.backgroundColor = '#8fe0d1';
+    this.display.classList.remove('lcddisplay-off');
+    let row_elements = this.display.getElementsByClassName('LCDRow');
+    for (let row = 0 ; row < this.rows ; row++ ){
+      let letter_ele = row_elements[row].getElementsByClassName('letter');
+      for (let col = 0 ; col < this.columns ; col++){
+        this.display_on_pixel(letter_ele[col]);
+      } 
+    }    
+    this.display_is_off = false;
   }
   
   display_off(){
-    this.screen.style.backgroundColor = '#3f772d';
+    this.display.classList.add('lcddisplay-off');
+    let row_elements = this.display.getElementsByClassName('LCDRow');
+    for (let row = 0 ; row < this.rows ; row++ ){
+      let letter_ele = row_elements[row].getElementsByClassName('letter');
+      for (let col = 0 ; col < this.columns ; col++){
+        this.display_off_pixel(letter_ele[col]);
+      }
+    }
+    this.display_is_off = true;
   }
-
 }
 
 export default lcd;
