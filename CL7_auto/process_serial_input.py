@@ -1,4 +1,5 @@
 from .lcd_handler import lcd_handler
+from .shared_vars import keyCode_confirmation
 
 def process_serial_input(input_str) :
     code_type = input_str[:3]
@@ -103,6 +104,15 @@ def process_serial_input(input_str) :
             match code_sub_type :
                 case 'PRO' :
                     keyCode_rec = int(input_str[8:])
+                    if (keyCode_confirmation.len_sent_keyCodes > 0) :
+                        if (keyCode_confirmation.sent_keyCodes[0] == keyCode_rec) :
+                            keyCode_confirmation.sent_keyCodes.pop(0)
+                            keyCode_confirmation.len_sent_keyCodes -= 1
+                        else :
+                            print("Key code mismatch, expected: ", keyCode_confirmation.sent_keyCodes[0], "received: ", keyCode_rec)
+                    else :
+                        print("No key code to compare with, received: ", keyCode_rec)
+                    
                     
         # Debug statements
         case 'DEB' :

@@ -1,5 +1,6 @@
 from flask_socketio import Namespace
 from .comm import Comm 
+from. shared_vars import keyCode_confirmation
 
 class keypad_handler(Namespace) :   
 
@@ -34,10 +35,14 @@ class keypad_handler(Namespace) :
         code = keypad_handler.codes.get(data, None)
         if (code) :
             Comm.serial_write(f'key {code:03d}')
+            keyCode_confirmation.sent_keyCodes.append(code)
+            keyCode_confirmation.len_sent_keyCodes += 1
 
     @staticmethod
     def send_keyCode(code) :
         if code in keypad_handler.keyCodes :
             Comm.serial_write(f'key {code:03d}')
+            keyCode_confirmation.sent_keyCodes.append(code)
+            keyCode_confirmation.len_sent_keyCodes += 1
             return 1 
         else : return 0

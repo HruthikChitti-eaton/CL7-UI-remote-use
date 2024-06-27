@@ -5,6 +5,8 @@ from .comm import Comm
 from threading import Thread
 from signal import signal, SIGINT
 from .config import Config
+from .shared_vars import keyCode_confirmation
+from time import sleep 
 
 def init(baud_rate, serial_port_name, server_port_num = 5000, init_server = True, logs = False) :
 
@@ -38,12 +40,9 @@ def init(baud_rate, serial_port_name, server_port_num = 5000, init_server = True
         Comm.baud_rate = baud_rate
         Comm.init()
 
-        # socketio.run(app, port=server_port_num, host='0.0.0.0'
-        #              , debug=False, use_reloader=False)
         server_thread = Thread(target = socketio.run, args = (app,), kwargs = {'port' : server_port_num, 'host' : '0.0.0.0', 'debug' : False, 'use_reloader' : False})
         server_thread.setDaemon(False)
         server_thread.start()
-        server_thread.join()
 
     else :
         Comm.serial_port_name = serial_port_name
@@ -63,5 +62,9 @@ def send_keyCode(keyCode) :
 def get_text_on_display() :
     return lcd_handler.screen_data
 
-def cleanup():
+def clean_up():
     Comm.stop(None,None)
+
+def wait_till_processed(sleep_time = 0.2):
+    while (keyCode_confirmation.len_sent_keyCodes != 0) :
+        sleep(sleep_time)

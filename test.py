@@ -1,7 +1,7 @@
-from CL7_auto import init, send_key, cleanup
+from CL7_auto import init, send_key, clean_up, wait_till_processed
 
 
-init(19200, 'COM5', server_port_num = 5000, init_server = False, logs = True)
+init(19200, 'COM5', server_port_num = 5000, init_server = True, logs = True)
 
 send_key('keypad_esc')
 
@@ -55,4 +55,8 @@ send_key('keypad_6')
 
 send_key('keypad_enter')
 
-cleanup()
+wait_till_processed()
+
+input('Press any key to exit')
+
+clean_up()
