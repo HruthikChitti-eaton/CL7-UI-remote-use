@@ -1,16 +1,14 @@
+from time import sleep, time
+from threading import Thread
 
 from .keypad_handler import keypad_handler
 from .lcd_handler import lcd_handler
 from .comm import Comm
-from threading import Thread
-from signal import signal, SIGINT
 from .config import Config
 from .shared_vars import keyCode_confirmation
-from time import sleep 
 
-def init(baud_rate, serial_port_name, server_port_num = 5000, init_server = True, logs = False) :
+def init(baud_rate, serial_port_name, server_port_num = 5000, init_server = False, logs = False) :
 
-    signal(SIGINT, Comm.stop)
     Config.init_server = init_server
 
     if (init_server) :
@@ -62,9 +60,23 @@ def send_keyCode(keyCode) :
 def get_text_on_display() :
     return lcd_handler.screen_data
 
+# Kills entire process 
 def clean_up():
     Comm.stop(None,None)
 
-def wait_till_processed(sleep_time = 0.2):
+def wait_till_processed(timeout = 5, sleep_time = 0.2):
+    start_time = time()
     while (keyCode_confirmation.len_sent_keyCodes != 0) :
+        if (time() - start_time) >= timeout :
+            return False
+        # Allow other threads to run
         sleep(sleep_time)
+    return True 
+
+# Closes everything / cleans everythin
+def free_port() :
+    Comm.keep_reading = False
+    Comm.port.close()
+    lcd_handler.clear_display()
+    keyCode_confirmation.sent_keyCodes = []
+    keyCode_confirmation.len_sent_keyCodes = 0

@@ -64,7 +64,6 @@ def process_serial_input(input_str) :
                                 string = input_str[20:].split('\n')
                                 a = f"LCD P00 {row:03d} {col:03d} {string[0]}"
                                 b = f"LCD P00 {row+1:03d} {indent:03d} {string[1]}"
-                                print (a, b)
                                 process_serial_input(a)
                                 process_serial_input(b)
 
@@ -109,6 +108,7 @@ def process_serial_input(input_str) :
                             keyCode_confirmation.sent_keyCodes.pop(0)
                             keyCode_confirmation.len_sent_keyCodes -= 1
                         else :
+                            print(keyCode_confirmation.sent_keyCodes)
                             print("Key code mismatch, expected: ", keyCode_confirmation.sent_keyCodes[0], "received: ", keyCode_rec)
                     else :
                         print("No key code to compare with, received: ", keyCode_rec)

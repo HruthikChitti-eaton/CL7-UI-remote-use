@@ -2,7 +2,7 @@ from shutil import copy as copy_file
 from subprocess import run 
 from os import chdir 
 
-src_file = 'C:/Git/Hruthik_HMI_automtion/psd-fw-ngc/Regulator/CL7/Code/Main/CL7'
+src_file = 'C:/Users/E0802100/Documents/Github/psd-fw-ngc/Regulator/CL7/Code/Main/CL7'
 working_dir = 'C:/CL7_CreateFirmwareBuild'
 dest_file = 'CL7'
 bat_file_path = 'CreateDevSignedFRM_AllInOneStep.bat'

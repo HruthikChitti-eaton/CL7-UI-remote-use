@@ -11,6 +11,7 @@ body {
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard syntax */
 }
+
 .upper_section {
     display: flex;
 }
@@ -37,7 +38,6 @@ body {
     border-right: 50px solid transparent; 
 }
 
-
 .led {
     border: 1px solid white;
     position: relative;
@@ -59,7 +59,6 @@ body {
     border-top: 15px solid var(--border-top-color, white);;
     border-right: 25px solid transparent; 
 }
-
 
 .vr {
     width:73px;
@@ -84,8 +83,6 @@ body {
     text-align: center;
     margin-bottom: var(--bottom-margin);
 }
-
-
 
 .led_headings  {
     margin-bottom: var(--bottom-margin);
@@ -146,8 +143,6 @@ body {
     padding: 12px;
     text-align: center;
 }
-
-
 
 .middle-box{
     border: 7px solid black;
